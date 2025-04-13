@@ -3,6 +3,9 @@ import "dotenv/config";
 import cors from "cors";
 import db from "./utils/db.js";
 
+// import all routes
+import userRoutes from "./routes/user.routes.js";
+
 const app = express();
 
 app.use(
@@ -34,6 +37,9 @@ app.get("/khatri", (req, res) => {
 
 // connect to db
 db();
+
+// user routes
+app.use("/api/v1/users", userRoutes);
 
 app.listen(port, () => {
   console.log(`Listening at port ${port}`);
