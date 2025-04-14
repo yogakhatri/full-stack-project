@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import db from "./utils/db.js";
+import cookieParser from "cookie-parser";
 
 // import all routes
 import userRoutes from "./routes/user.routes.js";
@@ -21,18 +22,12 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cookieParser());
+
 const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello World");
-});
-
-app.get("/yogesh", (req, res) => {
-  res.send("Hello Yogesh");
-});
-
-app.get("/khatri", (req, res) => {
-  res.send("Hello Khatri");
 });
 
 // connect to db
