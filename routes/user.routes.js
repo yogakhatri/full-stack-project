@@ -11,6 +11,6 @@ router.post("/register", registerUser);
 
 router.get("/verify/:token", verifyUser);
 
-router.get("/login", login);
+router.post("/login", login);
 
 export default router;
