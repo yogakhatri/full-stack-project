@@ -113,9 +113,13 @@ const login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, "shhhhhhhhhh", {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
 
     const cookieOptions = {
       httpOnly: true,
@@ -143,4 +147,52 @@ const login = async (req, res) => {
   }
 };
 
-export { registerUser, verifyUser, login };
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    console.log("🚀 ~ getProfile ~ user:", user);
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User no found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {}
+};
+
+const logoutUser = async (req, res) => {
+  try {
+    res.cookie("token", "", {});
+    res.statue(200).json({
+      success: true,
+      message: "Logged out successfully.",
+    });
+  } catch (error) {}
+};
+
+const forgotPassword = async (req, res) => {
+  try {
+
+  } catch (error) {}
+};
+
+const resetPassword = async (req, res) => {
+  try {
+  } catch (error) {}
+};
+
+export {
+  registerUser,
+  verifyUser,
+  login,
+  getProfile,
+  logoutUser,
+  forgotPassword,
+  resetPassword,
+};
